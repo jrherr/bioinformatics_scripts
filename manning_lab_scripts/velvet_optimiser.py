@@ -17,12 +17,12 @@ rule shuffle_reads:
 rule velvet_optimiser:
   input: FASTQ_DIR + "/{sample}.shuffled.fastq"
   output: protected(RESULTS_DIR + "/{sample}/contigs.fa")
-  run:  
+  run:
     shell("perl /usr/local/velvet_optimiser/VelvetOptimiser.pl -s " + str(START_KMER) + " -e " + str(END_KMER) + " -f '-shortPaired -fastq {input}' -t " + str(THREADS) +" -d " + RESULTS_DIR + "/{wildcards.sample}_temp; rmdir " + RESULTS_DIR + "/{wildcards.sample}; mv " + RESULTS_DIR + "/{wildcards.sample}_temp " + RESULTS_DIR + "/{wildcards.sample}")
 
 rule slim_contigs:
   input: RESULTS_DIR + "/{sample}/contigs.fa"
   output: RESULTS_DIR + "/{sample}/contigs-large.fas"
   run:
-    shell("ruby /Users/anthony/Documents/Ruby/lib/genome/contig_slimmer.rb " + input[0])
-    shell("ruby /Users/anthony/Documents/Ruby/lib/genome/n50.rb " + output[0])
+    shell("ruby /Users/josh/Documents/Ruby/lib/genome/contig_slimmer.rb " + input[0])
+    shell("ruby /Users/josh/Documents/Ruby/lib/genome/n50.rb " + output[0])
