@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Manning Lab BLAST Server</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+  <script type="text/javascript" src="<%= uri('/js/store.min.js') %>"></script>
+  <script type="text/javascript" src="<%= uri('/js/jquery.js') %>"></script>
+  <script type="text/javascript" src="<%= uri('/js/jquery-ui.js') %>"></script>
+  <script type="text/javascript" src="<%= uri('/js/jquery.enablePlaceholder.min.js') %>"></script>
+  <script type="text/javascript" src="<%= uri('/js/jquery.activity.js') %>"></script>
+  <script type="text/javascript" src="<%= uri('/js/jquery-scrollspy.js') %>"></script>
+  <script type="text/javascript" src="<%= uri('/js/bootstrap.transition.js') %>"></script>
+  <script type="text/javascript" src="<%= uri('/js/bootstrap.dropdown.js') %>"></script>
+  <script type="text/javascript" src="<%= uri('/js/bootstrap.modal.js') %>"></script>
+  <script type="text/javascript" src="<%= uri('/js/sequenceserver.js') %>"></script>
+  <script type="text/javascript" src="<%= uri('/js/sequenceserver.blast.js') %>"></script>
+
+  <%# without a space after erb's closing tag, a / gets appended to css' path %>
+  <link rel="stylesheet" media="screen" type="text/css" href="<%= uri('/css/bootstrap.min.css') %>" />
+  <link rel="stylesheet" media="screen" type="text/css" href="<%= uri('/css/bootstrap.dropdown.css') %>" />
+  <link rel="stylesheet" media="screen" type="text/css" href="<%= uri('/css/bootstrap.modal.css') %>" />
+  <link rel="stylesheet" media="screen" type="text/css" href="<%= uri('/css/bootstrap.icons.css') %>" />
+  <link rel="stylesheet" media="screen" type="text/css" href="<%= uri('/css/custom.css') %>" />
+
+</head>
+
+<body>
+
+  <div class="container">
+    <noscript>
+      <div class="nojs-error">
+        <h3>SequenceServer can't work without JavaScript.</h3>
+          <ul>
+            <li>Please see if you can enable JavaScript in your browser's preferences.</li>
+            <li>If your browser doesn't support JavaScript, please consider upgrading to the latest version or using Firefox or Chrome.</li>
+          </ul>
+      </div>
+    </noscript>
+
+    <div class="page">
+      <div id="banner">
+        <h1>Manning Lab BLAST Server</h1>
+      </div>
+
+      <form method="post" id="blast" action="<%= uri('/#result') %>">
+        <div class="row">
+          <div class="span16">
+            <div class="control-group">
+              <textarea name="sequence" id="sequence" spellcheck="false" autofocus="true" placeholder="Paste your sequence(s) here..." ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="notifications">
+          <div class="notification alert-info hide"  id="nucleotide-sequence-notification">
+            Detected: nucleotide sequence(s).
+          </div>
+
+          <div class="notification alert-info hide"  id="protein-sequence-notification">
+            Detected: protein sequence(s).
+          </div>
+
+          <div class="notification alert-error hide" id="mixed-sequence-notification">
+            Detected: mixed nucleotide and protein sequences. We can't handle that. Please try one sequence at a time.
+          </div>
+        </div>
+
+        <br class="large"/>
+
+        <div class="row">
+          <div class="span8">
+            <div class="offset-left box databases nucleotide">
+              <div class="clearfix">
+                <fieldset>
+                  <legend>Nucleotide databases</legend>
+                  <div class="controls offset-left">
+                    <% settings.databases.values.select{|database| database.type == :nucleotide}.sort.each do |database| %>
+                      <label class="checkbox">
+                        <input type="checkbox" name="databases[]" value="<%=database.hash%>" data-type="<%=database.type%>" />
+                        <span> <%= database.title or database.name %></span>
+                      </label>
+                    <% end %>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+
+          <div class="span8">
+            <div class="offset-right box databases protein">
+              <div class="clearfix">
+                <fieldset>
+                  <legend>Protein databases</legend>
+                  <div class="controls offset-left">
+                    <% settings.databases.values.select{|database| database.type == :protein}.sort.each do |database| %>
+                      <label class="checkbox">
+                        <input type="checkbox" name="databases[]" value="<%=database.hash%>" data-type="<%=database.type%>" />
+                        <span> <%= database.title or database.name %></span>
+                      </label>
+                    <% end %>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br class="large"/>
+
+        <div class="row">
+          <div class="span12">
+            <div class="offset-left box advanced">
+              <div class="clearfix">
+                <label for="advanced">Advanced Parameters:</label>
+                <input class="span8" type="text" name="advanced" id="advanced" title="View, and enter advanced parameters." placeholder="eg: -evalue 1.0e-5 -num_alignments 100"/>
+                <span class="icon-question-sign" data-toggle="modal" href="#help"></span>
+              </div>
+
+              <div class="modal hide fade" id="help">
+                <div class="modal-header">
+                  <h3>Advanced Options</h3>
+                </div>
+                <div class="modal-body">
+                  <%= erb :_options %>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" data-dismiss="modal">Got it!</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="span4">
+            <div id="methods">
+              <button type="submit" class="span3 btn btn-large btn-primary" id="method" disabled="disabled">blast</button>
+              <button class="btn btn-primary btn-large dropdown-toggle hide" data-toggle="dropdown">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu"></ul>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="modal hide" id="spinner" data-keyboard="false" data-backdrop="static">
+        <div class="modal-body">
+        </div>
+      </div>
+
+      <div class="results hide">
+        <div id="result">Waiting for BLAST to be run <!-- need bit before for UI testing so it knows when BLAST is finished -->
+        </div>
+      </div>
+
+      <div class="modal hide fade" id="error">
+        <div class="modal-header">
+          <h3 id="error-short">Oops! BLAST Failed</h3>
+        </div>
+        <div class="modal-body">
+          <h4 id="error-type"></h4>
+          <br/>
+          <p id="error-message"></p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+      <div id="underbar">
+        <p><strong><h3>Please email Josh (joshua.r.herr@gmail.com) if you have any questions. Thanks!</h3></strong></p>
+</div>
+</body>
+</html>
