@@ -1,0 +1,1 @@
+SELECT * FROM shig_STEC.Alias;
