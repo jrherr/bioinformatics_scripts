@@ -1,11 +1,10 @@
 #! /usr/bin/perl -w
 
 #################################################################
-# This script converts the GenBank sequence flat format to 
-# fasta format 
-# Author: Wenjie Deng
+# This script converts the GenBank sequence flat format to fasta format
 # usage: GB2Fasta.pl inFile outFile
 #################################################################
+
 use strict;
 
 my $usage = "Usage: GB2Fasta.pl inFile outFile\n";
@@ -36,7 +35,7 @@ while(my $line = <IN>) {
 		$seq =~ s/\s//g;
 		$seq = uc $seq;
 		print OUT $seq."\n";
-	}	
+	}
 }
 close IN;
 close OUT;
