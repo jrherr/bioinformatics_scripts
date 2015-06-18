@@ -2,8 +2,8 @@
 
 ######################################################################################
 # This script takes alignment sequence fasta file and converts it to phylip file
-# Date: 2007-01-29
-# Usage: perl Fasta2Phylip.pl inputFastaFile outputPhilipFile
+# Date: 2007
+# Usage: perl fasta_2_phylip.pl inputFastaFile outputPhilipFile
 ######################################################################################
 
 use strict;
@@ -16,7 +16,7 @@ my $unixFile = $infile.".unix";
 ConvertToUnix ($infile, $unixFile);
 ChangetoPhylip($unixFile, $outFile);
 unlink ($unixFile);
-print "All done!\n";
+print "File Converted!\n";
 
 exit 0;
 

@@ -1,10 +1,9 @@
 #! /usr/bin/perl -w
 
 ################################################################################
-# This script converts the alignment sequences in nexus sequential format to 
-# fasta format 
-# Author: Wenjie Deng
-# usage: perl Nexus2Fasta.pl infile outfile
+# This script converts aligned sequences in nexus sequential format to
+# fasta format
+# usage: perl nexus_2_fasta.pl infile outfile
 ################################################################################
 use strict;
 
@@ -28,14 +27,14 @@ while(my $line = <IN>) {
 	}elsif ($line =~ /^\;$/) {
 		$seqStartFlag = 0;
 	}elsif ($seqStartFlag) {
-		unless ($line =~ /^\[/) {						
+		unless ($line =~ /^\[/) {
 			if ($line =~ /^(\S+)\s+(\S+)\s+\[\d+\]$/ || $line =~ /^(\S+)\s+(\S+)$/) {
 				my $seqName = $1;
 				my $seq = $2;
 				print OUT ">$seqName\n$seq\n";
-				$count++;					
+				$count++;
 			}
-		} 				
+		}
 	}
 }
 close IN;

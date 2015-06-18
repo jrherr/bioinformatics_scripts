@@ -1,10 +1,9 @@
 #! /usr/bin/perl -w
 
 #################################################################
-# This script converts the sequences with SWISS-PROT format to 
-# fasta format 
-# Author: Wenjie Deng
-# usage: SwissProt2Fasta.pl infile outfile
+# This script converts the sequences with SWISS-PROT format to
+# fasta format
+# usage: swissprot_2_fasta.pl infile outfile
 #################################################################
 use strict;
 
@@ -32,7 +31,7 @@ while(my $line = <IN>) {
 	}elsif($line =~ /^ID\s+(\S+)/) {
 		$sp_id = $1;
 	}elsif($line =~ /^AC\s+(\w+)/) {
-		$seqName = $sp_id."|".$1;		
+		$seqName = $sp_id."|".$1;
 	}
 	elsif($line =~ /^SQ/) {
 		print OUT ">$seqName\n";
@@ -46,4 +45,3 @@ close IN;
 close OUT;
 unlink $unixFile;
 print "There are total $count sequences\n";
-

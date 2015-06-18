@@ -1,9 +1,8 @@
 #! /usr/bin/perl -w
 
 ################################################################################
-# This script converts the sequences in table format to fasta format 
-# Author: Wenjie Deng
-# usage: Tbl2Fasta.pl infile outfile
+# This script converts the sequences in table format to fasta format
+# usage: tbl_2_fasta.pl infile outfile
 ################################################################################
 use strict;
 

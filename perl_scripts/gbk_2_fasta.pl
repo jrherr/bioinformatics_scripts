@@ -2,7 +2,7 @@
 
 #################################################################
 # This script converts the GenBank sequence flat format to fasta format
-# usage: GB2Fasta.pl inFile outFile
+# usage: gbk_2_fasta.pl inFile outFile
 #################################################################
 
 use strict;

@@ -1,9 +1,8 @@
 #! /usr/bin/perl -w
 
 ########################################################################################
-# This script inputs sequence fasta file, removes non-alphabetical characters such as
-# "-, ?, #, $", and outputs sequence fasta file with cleaned sequence
-# Author: Wenjie Deng
+# This script takes a fasta file, removes non-alphabetical characters such as
+# "-, ?, #, $", and outputs fasta file with non-nucleotide characters removed
 # usage: SequCleaner.pl infile outfile
 ########################################################################################
 use strict;
@@ -38,7 +37,7 @@ while(my $line = <IN>) {
 		}
 		if ($seq) {
 			print OUT $seq."\n";
-		}		
+		}
 		$seq = "";
 	}
 }
@@ -46,4 +45,3 @@ close IN;
 close OUT;
 unlink $unixfile;
 print "There are total $seq_num sequences.\n";
-

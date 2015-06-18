@@ -1,17 +1,17 @@
 #!/usr/bin/perl -w
 
 #########################################################################################################
-# Program: reverseComplement.pl
+# Program: ReverseComplement.pl
 # Purpose: get reverse complement sequences from a fasta sequence file
 # Input: sequence fasta file
 # Output: reverse complement sequences in fasta file
-# Author: Wenjie Deng
 # Date: 2009-01-05
+# Usage: perl ReverseComplement.pl input.fasta output.fasta
 ###########################################################################################################
 
 use strict;
 
-my $usage = "perl reverseComplement.pl input_fasta_file output_fasta_file\n";
+my $usage = "perl reverseComplement.pl input.fasta output.fasta\n";
 my $inFastaFile = shift or die $usage;
 my $outFastaFile = shift or die $usage;
 my $unixFile = $inFastaFile.".unix";
@@ -40,7 +40,7 @@ unlink $unixFile;
 open OUTFASTA, ">$outFastaFile" or die "couldn't open $outFastaFile: $!\n";
 foreach my $seqName (@seqNames) {
 	my $seq = reverse $nameSeq{$seqName};
-	$seq =~ tr /ACGTacgt/TGCAtgca/;		
+	$seq =~ tr /ACGTacgt/TGCAtgca/;
 	print OUTFASTA ">",$seqName, "\n";
 	print OUTFASTA $seq,"\n";
 }
@@ -65,6 +65,6 @@ sub ConvertToUnix {
 	}elsif ($line =~ /\r/) {
 		$line =~ s/\r/\n/g;
 	}
-	print OUT $line;	
-	close OUT;	
+	print OUT $line;
+	close OUT;
 }

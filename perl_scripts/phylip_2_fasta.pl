@@ -1,10 +1,9 @@
 #! /usr/bin/perl -w
 
 ################################################################################
-# This script converts the alignment sequences in phylip sequential format to 
+# This script converts the alignment sequences in phylip sequential format to
 # fasta format 
-# Author: Wenjie Deng
-# usage: Phylip2Fasta.pl infile outfile
+# usage: phylip_2_fasta.pl infile outfile
 ################################################################################
 use strict;
 

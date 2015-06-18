@@ -1,4 +1,10 @@
 #!/usr/bin/perl -w
+#
+#################################################################################
+# This script converts OTU table
+# usage:
+################################################################################
+
 
 my $otuFile = shift;
 my $tableFile = shift;
@@ -18,7 +24,7 @@ close(OTUS);
 open (TABLE, $tableFile);
 
 # ### Print header.
-# 
+#
 my $line = <TABLE>;
 chomp($line);
 
@@ -35,7 +41,7 @@ print "$header\n";
 my %oTable = ();
 while (<TABLE>) {
 	chomp;
-	
+
 	my @fields = split(/\t/);
 	my $rowHeader = join("\t", @fields[1..$desCol]);
 	$oTable{$rowHeader}{$fields[0]} = $fields[$valCol];
