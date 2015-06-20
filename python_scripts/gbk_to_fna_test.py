@@ -1,11 +1,12 @@
+#!/usr/bin python
 # script to use BioPython to parse taxonomy annotations for genbank file
 
 from Bio import SeqIO
 
-gbk_filename = "NC_005213.gbk"
-faa_filename = "NC_005213_converted.fna"
+gbk_filename = "test.txt"
+faa_filename = "converted.fna"
 
-input_handle  = open(gbk_filename, "r")
+input_handle = open(gbk_filename, "r")
 output_handle = open(faa_filename, "w")
 
 #Short version:
@@ -19,9 +20,9 @@ for seq_record in SeqIO.parse(input_handle, "genbank") :
            seq_record.description,
            seq_record.annotations['taxonomy']
            seq_record.seq.tostring()))
-           '; '.join(seq_record.annotations['taxonomy'])
+
+# '; '.join(seq_record.annotations['taxonomy'])
 
 output_handle.close()
 input_handle.close()
 print "Completed"
- 

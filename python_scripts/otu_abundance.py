@@ -1,6 +1,8 @@
 '''
-Generate a CSV file with OTU information, abundance, and rank 
+Generate a CSV file with OTU information, abundance, and rank
+
 USAGE: python otu_abundance.py /path/to/final_OTU_map_file.txt
+
 contact: joshua.r.herr@gmail.com
 '''
 
