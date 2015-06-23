@@ -1,0 +1,6 @@
+#! /bin/bash
+
+# split fasta into individual sequences
+# usage: fasta_split input.fasta
+
+cat $1 | awk '/^>/ {if(N>0) printf("\n"); printf("%s\n",$0);++N;next;} { printf("%s",$0);} END {printf("\n");}' | split -l 2 - seq_ 
