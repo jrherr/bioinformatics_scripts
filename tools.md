@@ -27,6 +27,8 @@ Genome Assembly
 Comparative Genomics
 --------------------
 *lastz
+*[Proteinortho](https://www.bioinf.uni-leipzig.de/Software/proteinortho/)
+*[Fripan](http://www.vicbioinformatics.com/software.fripan.shtml)
 
 Amplicon Analysis
 -----------------
