@@ -22,6 +22,7 @@ General Tools
 Genome Assembly
 ---------------
 *mix (on github)
+*[Pilon](https://github.com/broadinstitute/pilon)
 
 Comparative Genomics
 --------------------
